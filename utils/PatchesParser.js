@@ -47,7 +47,7 @@ module.exports = async function parsePatch(packageName, hasRoot) {
     if (isRooted && !hasRoot) continue;
 
     patches.push({
-      name: patch.name,
+      name: patch.name.toLowerCase().replace(" ", "-"),
       description: patch.description,
       maxVersion: compatibleVersion || ' ',
       isRooted,

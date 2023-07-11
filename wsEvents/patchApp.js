@@ -27,9 +27,11 @@ async function mount(ws) {
  * @param {import('ws').WebSocket} ws
  */
 async function afterBuild(ws) {
-  // HACK: Kill Java after build is done to prevent EBUSY errors while deleting the cache
-  killProcess('java');
-  rmSync('revanced-cache', { recursive: true, force: true });
+  try {
+    // HACK: Kill Java after build is done to prevent EBUSY errors while deleting the cache
+    killProcess('java');
+    rmSync('revanced-cache', { recursive: true, force: true });
+  } catch (ignore) {}
   outputName();
   renameSync(
     join(global.revancedDir, 'revanced.apk'),

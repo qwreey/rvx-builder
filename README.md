@@ -1,12 +1,6 @@
-# ReVanced Builder
+# ReVanced Extended Builder
 
-## NOTICE
-
-This repository has been archived in favour of [ReVanced Builder v4](https://github.com/reisxd/revanced-builder-next), a rewrite of the same builder from scratch using better technologies. At the time of writing, v4 is not yet available for the public, but it will be soon once the core features are finished. In the meantime, you can [download](https://github.com/reisxd/revanced-builder/releases/latest) the latest version of Builder v3, which, at the moment, works just fine. If ReVanced changes anything about the patching process in the upstream, or APKMirror modifies its API to disallow APK downloads, Builder may fail in ways nobody can really predict accurately. No support, hereafter, will be given for this version, however.
-
----
-
-This project will allow you to download the APK of any of the [officially supported](https://github.com/revanced/revanced-patches#-patches) apps and build ReVanced easily!
+This project will allow you to download the APK of [supported](https://github.com/inotia00/revanced-patches/tree/revanced-extended#-patches) apps and build ReVanced Extended easily!
 
 ## Required
 
@@ -16,13 +10,13 @@ If you plan to use it from source, you'll also require [Node.js >= 16](https://n
 
 ## How to use
 
-If you are on a PC, download the latest executable from [here](https://github.com/reisxd/revanced-builder/releases/latest) or if you are on a Android device, please see [this](https://github.com/reisxd/revanced-builder/wiki/How-to-use-revanced-builder-on-Android).
+If you are on a PC, download the latest executable from [here](https://github.com/inotia00/rvx-builder/releases/latest) or if you are on a Android device, please see [this](https://github.com/inotia00/rvx-builder/wiki/How-to-use-rvx-builder-on-Android).
 
 **NOTE: If you intend to build the rooted version of either YouTube or YouTube Music, you must have the stock YouTube app to be the same version as the one chosen for building. Otherwise, the build will fail.**
 
 ## For developers
 
-For developers, see [this](https://github.com/reisxd/revanced-builder/blob/main/DEVELOPERS.md)
+For developers, see [this](https://github.com/inotia00/rvx-builder/blob/revanced-extended/DEVELOPERS.md)
 
 ## How to use (Docker)
 
@@ -30,7 +24,7 @@ Required [docker](https://docs.docker.com/get-docker/) and [docker-compose (for 
 
 **Note:** If you're using Docker Desktop, `docker-compose` will be pre-installed.
 
-Clone the repository and `cd` into the directory `revanced-builder`
+Clone the repository and `cd` into the directory `rvx-builder`
 
 ### Build using `docker-compose`
 
@@ -79,4 +73,4 @@ docker rmi <name_of_the_image> -f
 
 To update to a newer version of Builder, stop the existing container if it is running, build the container start it again.
 
-In both the builds, a persistent storage is kept. All the builds are stored in `<path/to>/revanced-builder/revanced/`.
+In both the builds, a persistent storage is kept. All the builds are stored in `<path/to>/rvx-builder/revanced/`.

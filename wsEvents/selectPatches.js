@@ -30,7 +30,7 @@ module.exports = function selectPatches(message) {
 
     if (includedPatchesArray.includes(patchName)) continue;
 
-    if (patch.includes('microg-support')) global.jarNames.isRooted = true;
+    if (patch.includes('microg-support') || patch.includes('MicroG support')) global.jarNames.isRooted = true;
 
     global.jarNames.patches += ` -e ${patchName}`;
   }

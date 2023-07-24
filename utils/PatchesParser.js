@@ -22,7 +22,7 @@ module.exports = async function parsePatch(packageName, hasRoot) {
   };
 
   for (const patch of patchesList) {
-    const isRooted = rootedPatches.includes(patch.name);
+    const isRooted = rootedPatches.includes(patch.name.toLowerCase().replaceAll(' ', '-'));
 
     // Check if the patch is compatible:
     let isCompatible = false;

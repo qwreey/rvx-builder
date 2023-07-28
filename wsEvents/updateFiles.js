@@ -27,6 +27,7 @@ global.jarNames = {
  */
 module.exports = async function updateFiles(ws) {
   const source = getSources();
+  const cli = source.cli.split('/');
   const patches = source.patches.split('/');
   const integrations = source.integrations.split('/');
 
@@ -36,8 +37,8 @@ module.exports = async function updateFiles(ws) {
 
   const filesToDownload = [
     {
-      owner: 'inotia00',
-      repo: 'revanced-cli'
+      owner: cli[0],
+      repo: cli[1]
     },
     {
       owner: patches[0],

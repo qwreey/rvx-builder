@@ -268,6 +268,10 @@ function addSearch(isPatches) {
 }
 
 function setSources() {
+  const cliOrg = document.getElementById('cli-org').value;
+  const cliSrc = document.getElementById('cli-src').value;
+  const cli = `${cliOrg}/${cliSrc}`;
+
   const patchesOrg = document.getElementById('patch-org').value;
   const patchesSrc = document.getElementById('patch-src').value;
   const patches = `${patchesOrg}/${patchesSrc}`;
@@ -279,6 +283,7 @@ function setSources() {
   sendCommand({
     event: 'setSettings',
     settings: {
+      cli,
       patches,
       integrations
     }
@@ -628,8 +633,15 @@ ws.onmessage = (msg) => {
     }
 
     case 'settings': {
+      const cli = message.settings.cli.split('/');
       const patches = message.settings.patches.split('/');
       const integrations = message.settings.integrations.split('/');
+
+      const cliOrg = document.getElementById('cli-org');
+      const cliSrc = document.getElementById('cli-src');
+
+      cliOrg.value = cli[0];
+      cliSrc.value = cli[1];
 
       const patchesOrg = document.getElementById('patch-org');
       const patchesSrc = document.getElementById('patch-src');

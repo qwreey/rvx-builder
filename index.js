@@ -21,6 +21,7 @@ const {
   checkFileAlreadyExists,
   selectAppVersion,
   patchApp,
+  patchAppWithRipLibs,
   checkForUpdates,
   getDevices,
   setDevice,
@@ -200,6 +201,9 @@ wsServer.on('connection', (ws) => {
         break;
       case 'patchApp':
         await patchApp(ws);
+        break;
+      case 'patchAppWithRipLibs':
+        await patchAppWithRipLibs(ws);
         break;
       case 'installReVanced':
         await installReVanced(ws);

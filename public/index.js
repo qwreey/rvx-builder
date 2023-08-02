@@ -187,7 +187,11 @@ function getAppVersions(isRooted, page = 1) {
 }
 
 function buildReVanced() {
-  sendCommand({ event: 'patchApp' });
+  if (localStorage.getItem('rip-libs')) {
+    sendCommand({ event: 'patchAppWithRipLibs' });
+  } else {
+    sendCommand({ event: 'patchApp' });
+  }
 }
 
 function getAlreadyExists() {

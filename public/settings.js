@@ -6,6 +6,9 @@ if (localStorage.getItem('auto-next')) {
 if (localStorage.getItem('black-theme')) {
   document.getElementById('blackBtn').checked = true;
 }
+if (localStorage.getItem('rip-libs')) {
+  document.getElementById('ripLibsBtn').checked = true;
+}
 
 accentColors.forEach((color) => {
   if (
@@ -37,5 +40,12 @@ document.getElementById('blackBtn').addEventListener('click', function () {
   } else {
     localStorage.setItem('black-theme', true);
     dElement.classList.add('black');
+  }
+});
+document.getElementById('ripLibsBtn').addEventListener('click', function () {
+  if (localStorage.getItem('rip-libs')) {
+    localStorage.removeItem('rip-libs');
+  } else {
+    localStorage.setItem('rip-libs', true);
   }
 });

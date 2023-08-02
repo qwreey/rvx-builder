@@ -43,6 +43,10 @@
   content: '\f138';
 }
 
+.fa-circle-xmark:before {
+  content: '\f057';
+}
+
 .fa-download:before {
   content: '\f019';
 }

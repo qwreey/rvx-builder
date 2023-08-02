@@ -1,4 +1,5 @@
 const patchApp = require('./patchApp.js');
+const patchAppWithRipLibs = require('./patchAppWithRipLibs.js');
 const selectApp = require('./selectApp.js');
 const selectAppVersion = require('./selectAppVersion.js');
 const selectPatches = require('./selectPatches.js');
@@ -16,6 +17,7 @@ const setSettings = require('./setSettings.js');
 
 module.exports = {
   patchApp,
+  patchAppWithRipLibs,
   selectApp,
   selectAppVersion,
   selectPatches,

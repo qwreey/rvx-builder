@@ -397,6 +397,18 @@ ws.onmessage = (msg) => {
           const version = message.versionList[i];
           const noRec = version.recommended == 'NOREC';
           const recommended = version.recommended ? 1 : 0;
+          const autoSelect = message.supported == 'C' ? version.version : message.supported;
+
+          versionsElement.innerHTML += `
+          ${
+            message.page == 1 && i == 0
+              ? `<li><input type="radio" name="version" id="app-${len}" value="${
+                autoSelect
+              }" data-beta="0" data-recommended="1"/>
+                <label for="app-${len}">${autoSelect} (AUTO SELECT)</label></li>`
+              : ''
+          }`;
+
           versionsElement.innerHTML += `
             <li>
             <input type="radio" name="version" id="app-${i}" value="${

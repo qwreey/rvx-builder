@@ -237,7 +237,8 @@ module.exports = async function getAppVersion(ws, message) {
         global.jarNames.devices && global.jarNames.devices[0]
           ? true
           : process.platform === 'android',
-      isRooted: global.jarNames.isRooted
+      isRooted: global.jarNames.isRooted,
+      supported: global.versions[global.versions.length - 1]
     })
   );
 };

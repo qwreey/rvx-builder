@@ -10,8 +10,7 @@ module.exports = async function parsePatch(packageName, hasRoot) {
   );
 
   const rootedPatches = [
-    'microg-support',
-    'music-microg-support'
+    'microg-support'
   ];
   const patches = [];
 

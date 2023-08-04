@@ -158,6 +158,8 @@ module.exports = async function patchApp(ws) {
     global.jarNames.cli,
     '-b',
     global.jarNames.patchesJar,
+    '-m',
+    global.jarNames.integrations,
     '-t',
     './revanced-cache',
     '--experimental',
@@ -170,11 +172,6 @@ module.exports = async function patchApp(ws) {
   if (process.platform === 'android') {
     args.push('--custom-aapt2-binary');
     args.push(join(global.revancedDir, 'aapt2'));
-  }
-
-  if (global.jarNames.patch.integrations) {
-    args.push('-m');
-    args.push(global.jarNames.integrations);
   }
 
   args.push(...global.jarNames.patches.split(' '));

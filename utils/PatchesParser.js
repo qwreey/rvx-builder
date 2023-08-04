@@ -16,10 +16,6 @@ module.exports = async function parsePatch(packageName, hasRoot) {
 
   global.versions = [];
 
-  global.jarNames.patch = {
-    integrations: true
-  };
-
   for (const patch of patchesList) {
     const isRooted = rootedPatches.includes(patch.name.toLowerCase().replaceAll(' ', '-'));
 

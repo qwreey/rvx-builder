@@ -158,6 +158,8 @@ module.exports = async function patchAppWithRipLibs(ws) {
     global.jarNames.cli,
     '-b',
     global.jarNames.patchesJar,
+    '-m',
+    global.jarNames.integrations,
     '-t',
     './revanced-cache',
     '--experimental',
@@ -193,11 +195,6 @@ module.exports = async function patchAppWithRipLibs(ws) {
         args.push('--rip-lib=x86');
         break;
     }
-  }
-
-  if (global.jarNames.patch.integrations) {
-    args.push('-m');
-    args.push(global.jarNames.integrations);
   }
 
   args.push(...global.jarNames.patches.split(' '));

@@ -66,11 +66,11 @@ async function reinstallReVanced() {
   switch (global.jarNames.selectedApp.packageName) {
     case 'com.google.android.youtube':
       if (!global.jarNames.isRooted)
-        pkgNameToGetUninstalled = 'app.revanced.android.youtube';
+        pkgNameToGetUninstalled = 'app.rvx.android.youtube';
       break;
     case 'com.google.android.apps.youtube.music':
       if (!global.jarNames.isRooted)
-        pkgNameToGetUninstalled = 'app.revanced.android.apps.youtube.music';
+        pkgNameToGetUninstalled = 'app.rvx.android.apps.youtube.music';
       break;
   }
 

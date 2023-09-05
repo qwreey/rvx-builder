@@ -156,6 +156,8 @@ module.exports = async function patchApp(ws) {
   const args = [
     '-jar',
     global.jarNames.cli,
+    'patch',
+    `${join(global.revancedDir, global.jarNames.selectedApp.packageName)}.apk`,
     '-b',
     global.jarNames.patchesJar,
     '-m',
@@ -163,8 +165,6 @@ module.exports = async function patchApp(ws) {
     '-t',
     './revanced-cache',
     '--experimental',
-    '-a',
-    `${join(global.revancedDir, global.jarNames.selectedApp.packageName)}.apk`,
     '-o',
     join(global.revancedDir, 'revanced.apk')
   ];

@@ -49,22 +49,15 @@ module.exports = async function mountReVanced(pkg, ws) {
     mount -o bind $MIRROR$base_path $stock_path`
   );
 
-  try {
-    // Force stop the app
-    await exec(`su -c 'am force-stop ${pkg}'`);
-    // Delete Mount script to folder
-    await exec(
-      `su -c 'rm "/data/adb/service.d/mount_revanced_${pkg}.sh"'`
-    );
-    // Move Mount script to folder
-    await exec(
-      `su -c 'cp "./mount.sh" "/data/adb/service.d/mount_revanced_${pkg}.sh"'`
-    );
-    // Give execution perms to Mount script
-    await exec(`su -c 'chmod +x "/data/adb/service.d/mount_revanced_${pkg}.sh"'`);
-    // Run Mount script
-    await exec(`su -mm -c '"/data/adb/service.d/mount_revanced_${pkg}.sh"'`);
-  } catch {} // Ignore it and continue
+  // Move Mount script to folder
+  await exec(
+    `su -c 'cp "./mount.sh" "/data/adb/service.d/mount_revanced_${pkg}.sh"'`
+  );
+  // Give execution perms to Mount script
+  await exec(`su -c 'chmod +x "/data/adb/service.d/mount_revanced_${pkg}.sh"'`);
+
+  // Run Mount script
+  await exec(`su -mm -c '"/data/adb/service.d/mount_revanced_${pkg}.sh"'`);
 
   // Kill app process
   await exec(`su -c 'am force-stop ${pkg}'`);

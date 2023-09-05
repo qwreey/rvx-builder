@@ -29,8 +29,6 @@ module.exports = async function updateFiles(ws) {
   const integrations = source.integrations.split('/');
 
   if (!existsSync(global.revancedDir)) mkdirSync(global.revancedDir);
-  if (existsSync('revanced-cache'))
-    rmSync('revanced-cache', { recursive: true, force: true });
 
   const filesToDownload = [
     {

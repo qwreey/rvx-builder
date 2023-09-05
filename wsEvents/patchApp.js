@@ -7,8 +7,6 @@ const exec = require('../utils/promisifiedExec.js');
 
 const mountReVanced = require('../utils/mountReVanced.js');
 
-const killProcess = require('kill-process-by-name');
-
 /**
  * @param {import('ws').WebSocket} ws
  */
@@ -27,11 +25,6 @@ async function mount(ws) {
  * @param {import('ws').WebSocket} ws
  */
 async function afterBuild(ws) {
-  try {
-    // HACK: Kill Java after build is done to prevent EBUSY errors while deleting the cache
-    killProcess('java');
-    rmSync('revanced-cache', { recursive: true, force: true });
-  } catch (ignore) {}
   outputName();
   renameSync(
     join(global.revancedDir, 'revanced.apk'),
@@ -162,9 +155,8 @@ module.exports = async function patchApp(ws) {
     global.jarNames.patchesJar,
     '-m',
     global.jarNames.integrations,
-    '-t',
-    './revanced-cache',
     '--experimental',
+    '-p',
     '-o',
     join(global.revancedDir, 'revanced.apk')
   ];

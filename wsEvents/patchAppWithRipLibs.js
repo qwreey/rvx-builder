@@ -155,7 +155,7 @@ module.exports = async function patchAppWithRipLibs(ws) {
     global.jarNames.patchesJar,
     '-m',
     global.jarNames.integrations,
-    '--experimental',
+    '-f',
     '-p',
     '-o',
     join(global.revancedDir, 'revanced.apk')

@@ -80,10 +80,7 @@ preflight() {
   }
 
   install_dependencies() {
-    local JAVA_NF NODE_NF
-    which java >/dev/null || JAVA_NF=1
-    which node >/dev/null || NODE_NF=1
-    [[ -z "$JAVA_NF" ]] && [[ -z "$NODE_NF" ]] && {
+    [[ -f "$RVB_DIR/settings.json" ]] && {
       log "Node.js and JDK already installed."
       return
     }

@@ -46,14 +46,23 @@ async function afterBuild(ws) {
         log: `Copied files over to /storage/emulated/0/!\nPlease install ReVanced, its located in /storage/emulated/0/${global.outputName}\nand if you are building YT/YTM ReVanced without root, also install /storage/emulated/0/microg.apk.`
       })
     );
-  } else if (process.platform === 'android') await mount(ws);
-  else if (!(global.jarNames.devices && global.jarNames.devices[0]))
+  } else if (process.platform === 'android') {
+    await exec(
+      `su -c pm install -r -d "${join(
+        global.revancedDir,
+        global.jarNames.selectedApp.packageName
+      )}.apk"`
+    );
+    await mount(ws);
+  } else if (!(global.jarNames.devices && global.jarNames.devices[0])) {
     ws.send(
       JSON.stringify({
         event: 'patchLog',
         log: `ReVanced has been built!\nPlease transfer over revanced/${global.outputName} and if you are using YT/YTM, revanced/microg.apk and install them!`
       })
     );
+  }
+
 
   if (global.jarNames.devices && global.jarNames.devices[0]) {
     ws.send(JSON.stringify({ event: 'buildFinished', install: true }));

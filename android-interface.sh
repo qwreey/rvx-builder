@@ -54,6 +54,13 @@ error() {
   exit "${3:-1}"
 }
 
+set_alias() {
+  echo "alias rvx='./rvx-builder.sh run'" >> ../usr/etc/bash.bashrc
+  echo "alias rvxre='./rvx-builder.sh reinstall && ./rvx-builder.sh run'" >> ../usr/etc/bash.bashrc
+  echo "alias rvxup='./rvx-builder.sh update && ./rvx-builder.sh run'" >> ../usr/etc/bash.bashrc
+  echo "alias opon='nano rvx-builder/options.json'" >> ../usr/etc/bash.bashrc
+}
+
 dload_and_install() {
   log "Downloading rvx-builder..."
   curl -sLo rvx-builder.zip https://github.com/inotia00/rvx-builder/archive/refs/heads/revanced-extended.zip
@@ -101,6 +108,7 @@ Possible reasons (in the order of commonality):
   install_dependencies
 
   [[ ! -d "$RVB_DIR" ]] && {
+    set_alias
     log "rvx-builder not installed. Installing..."
     mkdir -p "$RVB_DIR"
     cd "$RVB_DIR"

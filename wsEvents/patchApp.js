@@ -53,12 +53,14 @@ async function afterBuild(ws) {
       })
     );
   } else if (process.platform === 'android') {
-    await exec(
-      `su -c pm install -r -d "${join(
-        global.revancedDir,
-        global.jarNames.selectedApp.packageName
-      )}.apk"`
-    );
+    try {
+      await exec(
+        `su -c pm install -r "${join(
+          global.revancedDir,
+          global.jarNames.selectedApp.packageName
+        )}.apk"`
+      );
+    } catch {}
     await mount(ws);
   } else if (!(global.jarNames.devices && global.jarNames.devices[0])) {
     ws.send(

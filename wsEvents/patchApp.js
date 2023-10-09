@@ -174,7 +174,8 @@ module.exports = async function patchApp(ws) {
     args.push(join(global.revancedDir, 'aapt2'));
   }
 
-  args.push(...global.jarNames.patches.split(' '));
+  args.push(...global.jarNames.includedPatches);
+  args.push(...global.jarNames.excludedPatches);
 
   const buildProcess = spawn(global.javaCmd, args);
 

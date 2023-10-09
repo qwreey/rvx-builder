@@ -198,7 +198,8 @@ module.exports = async function patchAppWithRipLibs(ws) {
     }
   }
 
-  args.push(...global.jarNames.patches.split(' '));
+  args.push(...global.jarNames.includedPatches);
+  args.push(...global.jarNames.excludedPatches);
 
   const buildProcess = spawn(global.javaCmd, args);
 

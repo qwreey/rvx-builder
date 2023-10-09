@@ -10,14 +10,14 @@ module.exports = async function parsePatch(packageName, hasRoot) {
   );
 
   const rootedPatches = [
-    'microg-support'
+    'MicroG support'
   ];
   const patches = [];
 
   global.versions = [];
 
   for (const patch of patchesList) {
-    const isRooted = rootedPatches.includes(patch.name.toLowerCase().replaceAll(' ', '-'));
+    const isRooted = rootedPatches.includes(patch.name);
 
     // Check if the patch is compatible:
     let isCompatible = false;
@@ -28,7 +28,7 @@ module.exports = async function parsePatch(packageName, hasRoot) {
       if (pkg.name === packageName) {
         isCompatible = true;
 
-        if (pkg.versions.length !== 0) {
+        if (pkg.versions !== null) {
           compatibleVersion = pkg.versions.at(-1);
 
           global.versions.push(compatibleVersion);
@@ -42,11 +42,11 @@ module.exports = async function parsePatch(packageName, hasRoot) {
     if (isRooted && !hasRoot) continue;
 
     patches.push({
-      name: patch.name.toLowerCase().replaceAll(' ', '-'),
+      name: patch.name,
       description: patch.description,
       maxVersion: compatibleVersion || ' ',
       isRooted,
-      excluded: patch.excluded || patch.deprecated
+      excluded: patch.excluded || patch.deprecated || !patch.use
     });
   }
 

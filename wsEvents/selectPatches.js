@@ -4,34 +4,35 @@ const { writePatches } = require('../utils/Settings.js');
  * @param {Record<string, any>} message
  */
 module.exports = function selectPatches(message) {
-  global.jarNames.patches = '';
+  global.jarNames.includedPatches = [];
+  global.jarNames.excludedPatches = [];
 
   writePatches(global.jarNames.selectedApp, message.selectedPatches);
 
   /** @type {string[]} */
   const includedPatchesArray = [];
-  let isFirstElement = true;
 
   for (const patch of message.selectedPatches) {
-    const patchName = patch.toLowerCase().replaceAll(' ', '-').replace(/\|.+$/, '').replace(/\s/g, '');
+    const patchName = patch.replace(/\|.+$/, '');
 
     includedPatchesArray.push(patchName);
 
-    if (isFirstElement) {
-      global.jarNames.patches += `-i ${patchName}`;
-      isFirstElement = false;
-    } else global.jarNames.patches += ` -i ${patchName}`;
+    global.jarNames.includedPatches.push(`-i`);
+    global.jarNames.includedPatches.push(patchName);
   }
 
   global.jarNames.isRooted = false;
 
   for (const patch of message.excludedPatches) {
-    const patchName = patch.replace(/\|.+$/, '').replace(/\s/g, '');
+    const patchName = patch.replace(/\|.+$/, '');
 
     if (includedPatchesArray.includes(patchName)) continue;
 
-    if (patch.includes('microg-support') || patch.includes('MicroG support')) global.jarNames.isRooted = true;
+    if (patch.includes('MicroG support')) {
+        global.jarNames.isRooted = true;
+    }
 
-    global.jarNames.patches += ` -e ${patchName}`;
+    global.jarNames.excludedPatches.push(`-e`);
+    global.jarNames.excludedPatches.push(patchName);
   }
 };

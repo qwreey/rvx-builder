@@ -187,7 +187,7 @@ module.exports = async function patchApp(ws) {
       })
     );
 
-    if (data.toString().includes('Purging')) await afterBuild(ws);
+    if (data.toString().includes('Purged') || data.toString().includes('purge')) await afterBuild(ws);
 
     if (data.toString().includes('INSTALL_FAILED_UPDATE_INCOMPATIBLE')) {
       await reinstallReVanced(ws);
@@ -205,7 +205,7 @@ module.exports = async function patchApp(ws) {
       })
     );
 
-    if (data.toString().includes('Purging')) await afterBuild(ws);
+    if (data.toString().includes('Purged') || data.toString().includes('purge')) await afterBuild(ws);
 
     if (data.toString().includes('INSTALL_FAILED_UPDATE_INCOMPATIBLE')) {
       await reinstallReVanced(ws);

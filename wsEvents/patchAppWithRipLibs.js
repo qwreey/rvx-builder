@@ -184,6 +184,10 @@ module.exports = async function patchAppWithRipLibs(ws) {
     join(global.revancedDir, 'revanced.apk')
   ];
 
+  if (global.jarNames.isRooted) {
+    args.push('--unsigned');
+  }
+
   if (process.platform === 'android') {
     args.push('--custom-aapt2-binary');
     args.push(join(global.revancedDir, 'aapt2'));

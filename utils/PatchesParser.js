@@ -24,6 +24,8 @@ module.exports = async function parsePatch(packageName, hasRoot) {
     /** @type {string} */
     let compatibleVersion;
 
+    if (patch.compatiblePackages === null) continue;
+
     for (const pkg of patch.compatiblePackages)
       if (pkg.name === packageName) {
         isCompatible = true;
@@ -43,7 +45,7 @@ module.exports = async function parsePatch(packageName, hasRoot) {
 
     patches.push({
       name: patch.name,
-      description: patch.description,
+      description: patch.description || ' ',
       maxVersion: compatibleVersion || ' ',
       isRooted,
       excluded: patch.excluded || patch.deprecated || !patch.use

@@ -86,14 +86,6 @@ function setPatches() {
     x.getAttribute('data-patch-name')
   );
 
-  if (selectedPatchList.includes('Enable debugging') || selectedPatchList.includes('Enable debug logging')) {
-    const confirmDebug = confirm(
-      '**Included the "Enable Debugging" Patch**\n***Are you sure?***\nit\'s only for debugging purposes.'
-    );
-
-    if (!confirmDebug) return;
-  }
-
   sendCommand({
     event: 'selectPatches',
     selectedPatches: selectedPatchList,

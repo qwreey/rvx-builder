@@ -10,7 +10,8 @@ module.exports = async function parsePatch(packageName, hasRoot) {
   );
 
   const rootedPatches = [
-    'MicroG support'
+    'MicroG support',
+    'GmsCore support'
   ];
   const patches = [];
 

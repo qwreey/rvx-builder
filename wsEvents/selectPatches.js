@@ -28,7 +28,7 @@ module.exports = function selectPatches(message) {
 
     if (includedPatchesArray.includes(patchName)) continue;
 
-    if (patch.includes('MicroG support')) {
+    if (patch.includes('MicroG support') || patch.includes('GmsCore support')) {
         global.jarNames.isRooted = true;
     }
 

@@ -110,6 +110,7 @@ async function downloadFile(assets) {
       .at(-1)
       .split('.')
       .at(-1);
+    if (fileExt == 'asc') continue;
     const fileName = `${assets.repo}-${assets.version}.${fileExt}`;
 
     overWriteJarNames(fileName);

@@ -1,6 +1,6 @@
 const { getDownloadLink } = require('../utils/FileDownloader.js');
 
-const currentVersion = 'v3.11.1';
+const currentVersion = 'v3.12.1';
 
 /**
  * @param {import('ws').WebSocket} ws

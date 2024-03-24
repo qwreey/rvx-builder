@@ -25,6 +25,14 @@ p {
   margin-left: -4px;
 }
 
+#set-sources {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 12px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
 #themecolor-picker span {
   padding: 16px;
   transition: 200ms;

@@ -294,6 +294,48 @@ function setSources() {
   });
 }
 
+function setSourcesRVX() {
+  document.getElementById('cli-org').value = 'inotia00';
+  document.getElementById('cli-src').value = 'revanced-cli';
+
+  document.getElementById('patch-org').value = 'inotia00';
+  document.getElementById('patch-src').value = 'revanced-patches';
+
+  document.getElementById('integrations-org').value = 'inotia00';
+  document.getElementById('integrations-src').value = 'revanced-integrations';
+
+  document.getElementById('microg-org').value = 'inotia00';
+  document.getElementById('microg-src').value = 'VancedMicroG';
+
+  setSources();
+}
+
+function setSourcesReX() {
+  document.getElementById('cli-org').value = 'inotia00';
+  document.getElementById('cli-src').value = 'revanced-cli';
+
+  document.getElementById('patch-org').value = 'YT-Advanced';
+  document.getElementById('patch-src').value = 'ReX-patches';
+
+  document.getElementById('integrations-org').value = 'YT-Advanced';
+  document.getElementById('integrations-src').value = 'ReX-integrations';
+
+  setSources();
+}
+
+function setSourcesRVX_anddea() {
+  document.getElementById('cli-org').value = 'inotia00';
+  document.getElementById('cli-src').value = 'revanced-cli';
+
+  document.getElementById('patch-org').value = 'anddea';
+  document.getElementById('patch-src').value = 'revanced-patches';
+
+  document.getElementById('integrations-org').value = 'anddea';
+  document.getElementById('integrations-src').value = 'revanced-integrations';
+
+  setSources();
+}
+
 ws.onmessage = (msg) => {
   /** @type {Record<string, any>} */
   const message = JSON.parse(msg.data);

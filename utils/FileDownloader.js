@@ -2,6 +2,7 @@ const { readdirSync, createWriteStream, unlink } = require('node:fs');
 const { join: joinPath } = require('node:path');
 
 const { load } = require('cheerio');
+const { getSources } = require('../utils/Settings.js');
 const Progress = require('node-fetch-progress');
 const fetchWithUserAgent = require('../utils/fetchWithUserAgent.js');
 
@@ -13,17 +14,32 @@ let ws;
  */
 async function overWriteJarNames(fileName) {
   const filePath = joinPath(global.revancedDir, fileName);
-  if (fileName.includes('revanced-cli')) global.jarNames.cli = filePath;
 
-  if (fileName.includes('revanced-patches') && fileName.endsWith('.jar'))
+  const source = getSources();
+  const cli = source.cli.split('/')[1];
+  const patches = source.patches.split('/')[1];
+  const integrations = source.integrations.split('/')[1];
+  const microg = source.microg.split('/')[1];
+
+  if (fileName.includes(cli) && fileName.endsWith('.jar')) {
+    global.jarNames.cli = filePath;
+  }
+
+  if (fileName.includes(patches) && fileName.endsWith('.jar')) {
     global.jarNames.patchesJar = filePath;
+  }
 
-  if (fileName.endsWith('.apk') && !fileName.startsWith('VancedMicroG'))
+  if (fileName.includes(patches) && fileName.endsWith('.json')) {
+    global.jarNames.patchesList = filePath;
+  }
+
+  if (fileName.includes(integrations) && fileName.endsWith('.apk')) {
     global.jarNames.integrations = filePath;
+  }
 
-  if (fileName.startsWith('VancedMicroG')) global.jarNames.microG = filePath;
-
-  if (fileName.endsWith('.json')) global.jarNames.patchesList = filePath;
+  if (fileName.includes(microg)) {
+    global.jarNames.microG = filePath;
+  }
 }
 
 /**

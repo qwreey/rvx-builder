@@ -4,6 +4,7 @@ const exec = require('../utils/promisifiedExec.js');
 
 const { getAppVersion_ } = require('../utils/getAppVersion.js');
 const { getDownloadLink } = require('../utils/FileDownloader.js');
+const { getSources } = require('../utils/Settings.js');
 const mountReVancedInstaller = require('../utils/mountReVancedInstaller.js');
 
 module.exports = async function installReVanced(ws) {
@@ -86,8 +87,10 @@ module.exports = async function installReVanced(ws) {
       global.jarNames.selectedApp.packageName ===
         'com.google.android.apps.youtube.music')
   ) {
+    const source = getSources();
+    const microg = source.microg.split('/');
     const currentMicroGVersion = (
-      await getDownloadLink({ owner: 'inotia00', repo: 'VancedMicroG' })
+      await getDownloadLink({ owner: microg[0], repo: microg[1] })
     ).version
       .replace('v', '')
       .split('-')[0];

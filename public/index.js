@@ -276,12 +276,17 @@ function setSources() {
   const integrationsSrc = document.getElementById('integrations-src').value;
   const integrations = `${integrationsOrg}/${integrationsSrc}`;
 
+  const microgOrg = document.getElementById('microg-org').value;
+  const microgSrc = document.getElementById('microg-src').value;
+  const microg = `${microgOrg}/${microgSrc}`;
+
   sendCommand({
     event: 'setSettings',
     settings: {
       cli,
       patches,
-      integrations
+      integrations,
+      microg
     }
   });
 }
@@ -644,6 +649,7 @@ ws.onmessage = (msg) => {
       const cli = message.settings.cli.split('/');
       const patches = message.settings.patches.split('/');
       const integrations = message.settings.integrations.split('/');
+      const microg = message.settings.microg.split('/');
 
       const cliOrg = document.getElementById('cli-org');
       const cliSrc = document.getElementById('cli-src');
@@ -662,6 +668,12 @@ ws.onmessage = (msg) => {
 
       integrationsOrg.value = integrations[0];
       integrationsSrc.value = integrations[1];
+
+      const microgOrg = document.getElementById('microg-org');
+      const microgSrc = document.getElementById('microg-src');
+
+      microgOrg.value = microg[0];
+      microgSrc.value = microg[1];
     }
   }
 };

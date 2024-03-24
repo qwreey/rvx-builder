@@ -1,10 +1,11 @@
-const { existsSync, readFileSync, writeFileSync } = require('node:fs');
+const { existsSync, readFileSync, rmSync, writeFileSync } = require('node:fs');
 
 const defaultSettings = {
   sources: {
     cli: 'inotia00/revanced-cli',
     patches: 'inotia00/revanced-patches',
-    integrations: 'inotia00/revanced-integrations'
+    integrations: 'inotia00/revanced-integrations',
+    microg: 'inotia00/VancedMicroG'
   },
   patches: []
 };
@@ -74,6 +75,11 @@ function getSettings() {
   return settings;
 }
 
+function resetSettings() {
+  rmSync('settings.json', { recursive: true, force: true });
+  createSettingsFile();
+}
+
 function writeSources(sources) {
   const settings = JSON.parse(readFileSync('settings.json', 'utf8'));
 
@@ -94,5 +100,6 @@ module.exports = {
   getPatchList,
   writePatches,
   getSources,
+  resetSettings,
   writeSources
 };

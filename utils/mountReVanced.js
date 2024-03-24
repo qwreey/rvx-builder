@@ -39,12 +39,20 @@ module.exports = async function mountReVanced(pkg, ws) {
   writeFileSync(
     'mount.sh',
     `#!/system/bin/sh
-    while [ "$(getprop sys.boot_completed | tr -d '\r')" != "1" ]; do sleep 1; done
+
+    # Wait for the system to boot.
+    until [ "$( getprop sys.boot_completed )" = 1 ]; do sleep 3; done
+    until [ -d "/sdcard/Android" ]; do sleep 1; done
+
+    # Unmount any existing mount as a safety measure.
+    grep ${pkg} /proc/mounts | while read -r line; do echo $line | cut -d ' ' -f 2 | sed 's/apk.*/apk/' | xargs -r umount -l; done
 
     base_path="/data/adb/revanced/${pkg}.apk"
     stock_path=$(pm path ${pkg} | grep base | sed 's/package://g')
+    am force-stop ${pkg}
     chcon u:object_r:apk_data_file:s0 $base_path
-    mount -o bind $base_path $stock_path`
+    [ ! -z "$stock_path" ] && mount -o bind $base_path $stock_path
+    am force-stop ${pkg}`
   );
 
   // Move Mount script to folder

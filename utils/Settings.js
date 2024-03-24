@@ -5,7 +5,8 @@ const defaultSettings = {
     cli: 'inotia00/revanced-cli',
     patches: 'inotia00/revanced-patches',
     integrations: 'inotia00/revanced-integrations',
-    microg: 'inotia00/VancedMicroG'
+    microg: 'inotia00/VancedMicroG',
+    prereleases: 'false'
   },
   patches: []
 };

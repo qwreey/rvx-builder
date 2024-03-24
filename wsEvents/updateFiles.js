@@ -29,6 +29,9 @@ module.exports = async function updateFiles(ws) {
     let testPatches = testSource.patches.split('/');
     let testIntegrations = testSource.integrations.split('/');
     let testMicroG = testSource.microg.split('/');
+    if (typeof testSource.prereleases === 'undefined') {
+        resetSettings();
+    }
   } catch (err) {
     resetSettings();
   }
@@ -37,6 +40,7 @@ module.exports = async function updateFiles(ws) {
   const patches = source.patches.split('/');
   const integrations = source.integrations.split('/');
   const microg = source.microg.split('/');
+  const preReleases = source.prereleases == 'true';
 
   if (!existsSync(global.revancedDir)) mkdirSync(global.revancedDir);
 
@@ -75,8 +79,7 @@ module.exports = async function updateFiles(ws) {
   }
 
   global.downloadFinished = false;
-
-  await downloadFiles(filesToDownload, ws);
+  await downloadFiles(filesToDownload, preReleases, ws);
 
   if (process.platform === 'android') await checkJDKAndAapt2(ws);
   else await checkJDkAndADB(ws);

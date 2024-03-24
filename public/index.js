@@ -280,13 +280,16 @@ function setSources() {
   const microgSrc = document.getElementById('microg-src').value;
   const microg = `${microgOrg}/${microgSrc}`;
 
+  const prereleases = document.getElementById('pre-releases').value + '';
+
   sendCommand({
     event: 'setSettings',
     settings: {
       cli,
       patches,
       integrations,
-      microg
+      microg,
+      prereleases
     }
   });
 }
@@ -650,6 +653,7 @@ ws.onmessage = (msg) => {
       const patches = message.settings.patches.split('/');
       const integrations = message.settings.integrations.split('/');
       const microg = message.settings.microg.split('/');
+      const prereleases = message.settings.prereleases;
 
       const cliOrg = document.getElementById('cli-org');
       const cliSrc = document.getElementById('cli-src');
@@ -674,6 +678,13 @@ ws.onmessage = (msg) => {
 
       microgOrg.value = microg[0];
       microgSrc.value = microg[1];
+
+      const preReleases = document.getElementById('pre-releases');
+      if (typeof prereleases === 'undefined') {
+          preReleases.value = 'false';
+      } else {
+          preReleases.value = prereleases;
+      }
     }
   }
 };

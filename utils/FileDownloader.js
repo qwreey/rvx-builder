@@ -45,53 +45,55 @@ async function overWriteJarNames(fileName) {
 /**
  * @param {Record<string, any>} json
  */
-async function getDownloadLink(json) {
-  const res = await fetch(
-    `https://api.github.com/repos/${json.owner}/${json.repo}/releases/latest`
-  );
-  const latestRelease = await res.json();
+async function getDownloadLink(json, preReleases) {
+  const preReleaseUrl = `https://github.com/${json.owner}/${json.repo}/releases`
+  const preReleaseTag = 'span[class="ml-1 wb-break-all"]'
+  const stableReleaseUrl = `https://github.com/${json.owner}/${json.repo}/releases/latest`
+  const stableReleaseTag = 'span[class="ml-1"]'
+
+  let releaseTag = stableReleaseTag;
+  let releaseUrl = stableReleaseUrl;
+
+  if (preReleases) releaseTag = preReleaseTag;
+  if (preReleases) releaseUrl = preReleaseUrl;
 
   const json_ = {
-    version: latestRelease?.tag_name,
-    assets: latestRelease?.assets,
+    version: '',
+    assets: '',
     repo: json.repo
   };
 
-  if (latestRelease.error || !res.ok) {
-    /** @type {{ browser_download_url: string }[]} */
-    const assets = [];
-    const releasesPage = await fetch(
-      `https://github.com/${json.owner}/${json.repo}/releases/latest`
-    );
+  /** @type {{ browser_download_url: string }[]} */
+  const assets = [];
+  const releasesPage = await fetchWithUserAgent(releaseUrl);
 
-    if (!releasesPage.ok)
-      throw new Error(
+  if (!releasesPage.ok)
+    throw new Error(
         'You got ratelimited from GitHub\n...Completely? What did you even do?'
-      );
-
-    const releasePage = await releasesPage.text();
-    const $ = load(releasePage);
-
-    json_.version = $('span[class="ml-1"]').first().text().replace(/\s/g, '');
-
-    const expandedAssets = await fetch(
-      `https://github.com/${json.owner}/${json.repo}/releases/expanded_assets/${json_.version}`
     );
 
-    const assetsPageText = await expandedAssets.text();
-    const assetsPage = load(assetsPageText);
+  const releasePage = await releasesPage.text();
+  const $ = load(releasePage);
 
-    for (const downloadLink of assetsPage('a[rel="nofollow"]').get())
-      if (
-        !downloadLink.attribs.href.endsWith('.tar.gz') &&
-        !downloadLink.attribs.href.endsWith('.zip')
-      )
-        assets.push({
-          browser_download_url: `https://github.com${downloadLink.attribs.href}`
-        });
+  json_.version = $(releaseTag).first().text().replace(/\s/g, '');
 
-    json_.assets = assets;
-  }
+  const expandedAssets = await fetchWithUserAgent(
+    `https://github.com/${json.owner}/${json.repo}/releases/expanded_assets/${json_.version}`
+  );
+
+  const assetsPageText = await expandedAssets.text();
+  const assetsPage = load(assetsPageText);
+
+  for (const downloadLink of assetsPage('a[rel="nofollow"]').get())
+    if (
+      !downloadLink.attribs.href.endsWith('.tar.gz') &&
+      !downloadLink.attribs.href.endsWith('.zip')
+    )
+      assets.push({
+        browser_download_url: `https://github.com${downloadLink.attribs.href}`
+      });
+
+  json_.assets = assets;
 
   return json_;
 }
@@ -173,11 +175,11 @@ async function dloadFromURL(url, outputPath, websocket) {
  * @param {Record<string, any>[]} repos
  * @param {import('ws').WebSocket} websocket
  */
-async function downloadFiles(repos, websocket) {
+async function downloadFiles(repos, preReleases, websocket) {
   ws = websocket;
 
   for (const repo of repos) {
-    const downloadLink = await getDownloadLink(repo);
+    const downloadLink = await getDownloadLink(repo, preReleases);
 
     await downloadFile(downloadLink);
   }

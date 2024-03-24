@@ -7,6 +7,7 @@ const { join: joinPath } = require('path');
 
 const { getAppVersion: getAppVersion_ } = require('../utils/getAppVersion.js');
 const { downloadApp: downloadApp_ } = require('../utils/downloadApp.js');
+const fetchWithUserAgent = require('../utils/fetchWithUserAgent.js');
 const getDeviceArch = require('../utils/getDeviceArch.js');
 
 const APKMIRROR_UPLOAD_BASE = (page) =>
@@ -29,7 +30,7 @@ const sanitizeVersion = (ver) => {
  * @returns
  */
 async function getPage(url) {
-  return fetch(url).then((res) => res.text());
+  return fetchWithUserAgent(url).then((res) => res.text());
 }
 
 async function installRecommendedStock(ws, dId) {

@@ -2,8 +2,8 @@ const { readdirSync, createWriteStream, unlink } = require('node:fs');
 const { join: joinPath } = require('node:path');
 
 const { load } = require('cheerio');
-const fetch = require('node-fetch');
 const Progress = require('node-fetch-progress');
+const fetchWithUserAgent = require('../utils/fetchWithUserAgent.js');
 
 /** @type {import('ws').WebSocket} */
 let ws;
@@ -114,7 +114,7 @@ async function dloadFromURL(url, outputPath, websocket) {
   if (websocket != null) ws = websocket;
 
   try {
-    const res = await fetch(url);
+    const res = await fetchWithUserAgent(url);
     const writeStream = createWriteStream(outputPath);
     const downloadStream = res.body.pipe(writeStream);
 

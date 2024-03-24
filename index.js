@@ -13,22 +13,23 @@ const pf = require('portfinder');
 const killProcess = require('kill-process-by-name');
 
 const {
-  updateFiles,
-  selectApp,
-  getPatches,
-  selectPatches,
-  getAppVersion,
   checkFileAlreadyExists,
-  selectAppVersion,
+  checkForUpdates,
+  fetchWithUserAgent,
+  getApp,
+  getAppVersion,
+  getDevices,
+  getPatches,
+  getSettings,
+  installReVanced,
   patchApp,
   patchAppWithRipLibs,
-  checkForUpdates,
-  getDevices,
+  selectApp,
+  selectAppVersion,
+  selectPatches,
   setDevice,
-  installReVanced,
-  getApp,
-  getSettings,
-  setSettings
+  setSettings,
+  updateFiles
 } = require('./wsEvents/index.js');
 
 const app = Express();
@@ -166,38 +167,32 @@ wsServer.on('connection', (ws) => {
     // Theres no file handler, soo...
 
     switch (message.event) {
+      case 'checkFileAlreadyExists':
+        checkFileAlreadyExists(ws);
+        break;
       case 'checkForUpdates':
         await checkForUpdates(ws);
+        break;
+      case 'fetchWithUserAgent':
+        await fetchWithUserAgent(ws);
         break;
       case 'getAppList':
         await getApp(ws);
         break;
-      case 'updateFiles':
-        await updateFiles(ws);
+      case 'getAppVersion':
+        await getAppVersion(ws, message);
         break;
       case 'getDevices':
         await getDevices(ws);
         break;
-      case 'setDevice':
-        setDevice(message);
-        break;
-      case 'selectApp':
-        selectApp(message);
-        break;
       case 'getPatches':
         await getPatches(ws);
         break;
-      case 'selectPatches':
-        selectPatches(message);
+      case 'getSettings':
+        await getSettings(ws);
         break;
-      case 'checkFileAlreadyExists':
-        checkFileAlreadyExists(ws);
-        break;
-      case 'getAppVersion':
-        await getAppVersion(ws, message);
-        break;
-      case 'selectAppVersion':
-        await selectAppVersion(message, ws);
+      case 'installReVanced':
+        await installReVanced(ws);
         break;
       case 'patchApp':
         await patchApp(ws);
@@ -205,14 +200,23 @@ wsServer.on('connection', (ws) => {
       case 'patchAppWithRipLibs':
         await patchAppWithRipLibs(ws);
         break;
-      case 'installReVanced':
-        await installReVanced(ws);
+      case 'selectApp':
+        selectApp(message);
         break;
-      case 'getSettings':
-        await getSettings(ws);
+      case 'selectAppVersion':
+        await selectAppVersion(message, ws);
+        break;
+      case 'selectPatches':
+        selectPatches(message);
+        break;
+      case 'setDevice':
+        setDevice(message);
         break;
       case 'setSettings':
         await setSettings(message);
+        break;
+      case 'updateFiles':
+        await updateFiles(ws);
         break;
       case 'exit':
         process.kill(process.pid, 'SIGTERM');

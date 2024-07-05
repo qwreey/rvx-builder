@@ -24,6 +24,7 @@ const {
   installReVanced,
   patchApp,
   patchAppWithRipLibs,
+  patchAppArscLib,
   selectApp,
   selectAppVersion,
   selectPatches,
@@ -199,6 +200,9 @@ wsServer.on('connection', (ws) => {
         break;
       case 'patchAppWithRipLibs':
         await patchAppWithRipLibs(ws);
+        break;
+      case 'patchAppArscLib':
+        await patchAppArscLib(ws);
         break;
       case 'selectApp':
         selectApp(message);

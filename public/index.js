@@ -109,7 +109,7 @@ function setAppVersion(arch, version) {
     if (arch == null && versionChecked === null)
       return alert("You didn't select an app version!");
 
-    if (versionChecked !== null) {
+    if (versionChecked !== null && !localStorage.getItem('arsclib')) {
       if (
         versionChecked.hasAttribute('data-recommended') &&
         versionChecked.getAttribute('data-recommended') !== '1'
@@ -179,7 +179,9 @@ function getAppVersions(isRooted, page = 1) {
 }
 
 function buildReVanced() {
-  if (localStorage.getItem('rip-libs')) {
+  if (localStorage.getItem('arsclib')) {
+    sendCommand({ event: 'patchAppArscLib' });
+  } else if (localStorage.getItem('rip-libs')) {
     sendCommand({ event: 'patchAppWithRipLibs' });
   } else {
     sendCommand({ event: 'patchApp' });
@@ -306,6 +308,12 @@ function setSources() {
   });
 }
 
+function disableARSCLib() {
+  if (localStorage.getItem('arsclib')) {
+    document.getElementById('ARSCLibBtn').click();
+  }
+}
+
 function setSourcesRVX() {
   document.getElementById('cli-org').value = 'inotia00';
   document.getElementById('cli-src').value = 'revanced-cli';
@@ -319,6 +327,7 @@ function setSourcesRVX() {
   document.getElementById('microg-org').value = 'ReVanced';
   document.getElementById('microg-src').value = 'GmsCore';
 
+  disableARSCLib();
   setSources();
 }
 
@@ -332,6 +341,7 @@ function setSourcesReX() {
   document.getElementById('integrations-org').value = 'YT-Advanced';
   document.getElementById('integrations-src').value = 'ReX-integrations';
 
+  disableARSCLib();
   setSources();
 }
 
@@ -343,6 +353,20 @@ function setSourcesRVX_anddea() {
   document.getElementById('patch-src').value = 'revanced-patches';
 
   document.getElementById('integrations-org').value = 'anddea';
+  document.getElementById('integrations-src').value = 'revanced-integrations';
+
+  disableARSCLib();
+  setSources();
+}
+
+function setSourcesRVX_ARSCLib() {
+  document.getElementById('cli-org').value = 'inotia00';
+  document.getElementById('cli-src').value = 'revanced-cli-arsclib';
+
+  document.getElementById('patch-org').value = 'inotia00';
+  document.getElementById('patch-src').value = 'revanced-patches-arsclib';
+
+  document.getElementById('integrations-org').value = 'inotia00';
   document.getElementById('integrations-src').value = 'revanced-integrations';
 
   setSources();
@@ -459,7 +483,7 @@ ws.onmessage = (msg) => {
 
           versionsElement.innerHTML += `
           ${
-            message.page == 1 && i == 0
+            message.page == 1 && i == 0 && !localStorage.getItem('arsclib')
               ? `<li><input type="radio" name="version" id="app-${len}" value="${
                 autoSelect
               }" data-beta="0" data-recommended="1"/>

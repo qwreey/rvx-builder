@@ -51,6 +51,10 @@
   content: '\f121';
 }
 
+.fa-screwdriver-wrench:before {
+  content: '\f7d9';
+}
+
 .fa-download:before {
   content: '\f019';
 }

@@ -57,6 +57,10 @@ p {
   margin-bottom: 15px;
 }
 
+#set-sources-rvx-arsclib {
+  display: none;
+}
+
 #set-sources-pre-releases {
   display: none;
 }

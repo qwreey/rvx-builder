@@ -49,7 +49,7 @@ module.exports = async function parsePatch(packageName, hasRoot) {
       description: patch.description || ' ',
       maxVersion: compatibleVersion || ' ',
       isRooted,
-      excluded: patch.excluded || patch.deprecated || !patch.use
+      excluded: patch.excluded || (patch.use !== undefined && !patch.use)
     });
   }
 

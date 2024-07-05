@@ -47,6 +47,10 @@
   content: '\f057';
 }
 
+.fa-code:before {
+  content: '\f121';
+}
+
 .fa-download:before {
   content: '\f019';
 }

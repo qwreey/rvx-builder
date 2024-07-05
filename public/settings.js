@@ -6,6 +6,9 @@ if (localStorage.getItem('auto-next')) {
 if (localStorage.getItem('black-theme')) {
   document.getElementById('blackBtn').checked = true;
 }
+if (localStorage.getItem('pre-releases')) {
+  document.getElementById('preReleases').checked = true;
+}
 if (localStorage.getItem('rip-libs')) {
   document.getElementById('ripLibsBtn').checked = true;
 }
@@ -40,6 +43,15 @@ document.getElementById('blackBtn').addEventListener('click', function () {
   } else {
     localStorage.setItem('black-theme', true);
     dElement.classList.add('black');
+  }
+});
+document.getElementById('preReleases').addEventListener('click', function () {
+  if (localStorage.getItem('pre-releases')) {
+    localStorage.removeItem('pre-releases');
+    document.getElementById('set-sources-pre-releases').click();
+  } else {
+    localStorage.setItem('pre-releases', true);
+    document.getElementById('set-sources-pre-releases').click();
   }
 });
 document.getElementById('ripLibsBtn').addEventListener('click', function () {

@@ -263,6 +263,18 @@ function addSearch(isPatches) {
   });
 }
 
+function setSourcesPreReleases() {
+  const prereleases = document.getElementById('pre-releases').value + '';
+
+    if (prereleases === 'true') {
+      document.getElementById('pre-releases').value = 'false';
+    } else {
+      document.getElementById('pre-releases').value = 'true';
+    }
+
+  setSources();
+}
+
 function setSources() {
   const cliOrg = document.getElementById('cli-org').value;
   const cliSrc = document.getElementById('cli-src').value;
@@ -304,8 +316,8 @@ function setSourcesRVX() {
   document.getElementById('integrations-org').value = 'inotia00';
   document.getElementById('integrations-src').value = 'revanced-integrations';
 
-  document.getElementById('microg-org').value = 'inotia00';
-  document.getElementById('microg-src').value = 'VancedMicroG';
+  document.getElementById('microg-org').value = 'ReVanced';
+  document.getElementById('microg-src').value = 'GmsCore';
 
   setSources();
 }

@@ -97,7 +97,7 @@ module.exports = async function installReVanced(ws) {
 
     for (const deviceId of global.jarNames.devices) {
       const microGVersion = await getAppVersion_(
-        'com.mgoogle.android.gms',
+        'app.revanced.android.gms',
         null,
         false,
         deviceId

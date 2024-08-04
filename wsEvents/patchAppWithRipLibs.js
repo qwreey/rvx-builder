@@ -240,22 +240,4 @@ module.exports = async function patchAppWithRipLibs(ws) {
 
     if (data.toString().includes('Unmatched')) reportSys(args, ws);
   });
-
-  buildProcess.stderr.on('data', async (data) => {
-    ws.send(
-      JSON.stringify({
-        event: 'patchLog',
-        log: data.toString()
-      })
-    );
-
-    if (data.toString().includes('Purged') || data.toString().includes('purge')) await afterBuild(ws);
-
-    if (data.toString().includes('INSTALL_FAILED_UPDATE_INCOMPATIBLE')) {
-      await reinstallReVanced(ws);
-      await afterBuild(ws);
-    }
-
-    if (data.toString().includes('Unmatched')) reportSys(args, ws);
-  });
 };

@@ -26,7 +26,7 @@ async function afterBuild(ws) {
     ws.send(
       JSON.stringify({
         event: 'patchLog',
-        log: `Copied files over to /storage/emulated/0/!\nPlease install ReVanced, its located in /storage/emulated/0/${global.outputName}\nand if you are building YT/YTM ReVanced without root, also install /storage/emulated/0/microg.apk.`
+        log: `Copied files over to /storage/emulated/0/!\nPlease install ReVanced, its located in /storage/emulated/0/${global.outputName}.`
       })
     );
   }
@@ -34,7 +34,7 @@ async function afterBuild(ws) {
     ws.send(
       JSON.stringify({
         event: 'patchLog',
-        log: `ReVanced has been built!\nPlease transfer over revanced/${global.outputName} and if you are using YT/YTM, revanced/microg.apk and install them!`
+        log: `ReVanced has been built!\nPlease transfer over revanced/${global.outputName}.`
       })
     );
 
@@ -146,24 +146,6 @@ module.exports = async function patchAppArscLib(ws) {
   const buildProcess = spawn(global.javaCmd, args);
 
   buildProcess.stdout.on('data', async (data) => {
-    ws.send(
-      JSON.stringify({
-        event: 'patchLog',
-        log: data.toString()
-      })
-    );
-
-    if (data.toString().includes('Finished')) await afterBuild(ws);
-
-    if (data.toString().includes('INSTALL_FAILED_UPDATE_INCOMPATIBLE')) {
-      await reinstallReVanced(ws);
-      await afterBuild(ws);
-    }
-
-    if (data.toString().includes('Unmatched')) reportSys(args, ws);
-  });
-
-  buildProcess.stderr.on('data', async (data) => {
     ws.send(
       JSON.stringify({
         event: 'patchLog',

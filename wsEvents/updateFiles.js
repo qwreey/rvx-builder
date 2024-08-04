@@ -12,6 +12,7 @@ global.jarNames = {
   patchesJar: global.revancedDir,
   integrations: global.revancedDir,
   microG: global.revancedDir,
+  apkEditor: global.revancedDir,
   patchesList: global.revancedDir,
   selectedApp: '',
   patches: '',
@@ -60,6 +61,10 @@ module.exports = async function updateFiles(ws) {
     {
       owner: microg[0],
       repo: microg[1]
+    },
+    {
+      owner: 'REAndroid',
+      repo: 'APKEditor'
     }
   ];
 

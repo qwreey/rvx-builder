@@ -40,6 +40,10 @@ async function overWriteJarNames(fileName) {
   if (fileName.includes(microg)) {
     global.jarNames.microG = filePath;
   }
+
+  if (fileName.includes('APKEditor') && fileName.endsWith('.jar')) {
+    global.jarNames.apkEditor = filePath;
+  }
 }
 
 /**

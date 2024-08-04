@@ -3,6 +3,7 @@ const { join: joinPath } = require('node:path');
 const { load } = require('cheerio');
 const { dloadFromURL } = require('./FileDownloader.js');
 const fetchWithUserAgent = require('../utils/fetchWithUserAgent.js');
+const { antiSplit } = require('./AntiSplit.js');
 
 
 /**
@@ -34,7 +35,7 @@ async function downloadApp(ws) {
 
   const $ = load(versionDownloadList);
 
-  const dlLink =
+  const apkDownloadLink =
     arch &&
     global.jarNames.selectedApp.packageName ===
       'com.google.android.apps.youtube.music'
@@ -52,7 +53,15 @@ async function downloadApp(ws) {
           .first()
           .attr('href');
 
-  if (!dlLink) {
+  const apkmDownloadLink =
+  $('span[class="apkm-badge success"]')
+  .first()
+  .parent()
+  .children('a[class="accent_color"]')
+  .first()
+  .attr('href');
+
+  if (!apkDownloadLink && !apkmDownloadLink) {
     return ws.send(
       JSON.stringify({
         event: 'error',
@@ -60,9 +69,13 @@ async function downloadApp(ws) {
       })
     );
   }
-  const downloadLinkPage = await fetchWithUserAgent(
-    `https://www.apkmirror.com${dlLink}`
-  ).then((res) => res.text());
+
+  const downloadLink = !apkDownloadLink
+  ? `https://www.apkmirror.com${apkmDownloadLink}`
+  : `https://www.apkmirror.com${apkDownloadLink}`;
+
+  const downloadLinkPage = await fetchWithUserAgent(downloadLink)
+  .then((res) => res.text());
 
   const $2 = load(downloadLinkPage);
   const pageLink = $2('a[class^="accent_bg btn btn-flat downloadButton"]')
@@ -75,14 +88,36 @@ async function downloadApp(ws) {
   const $3 = load(downloadPage);
   const apkLink = $3('a[rel="nofollow"]').first().attr('href');
 
-  await dloadFromURL(
-    `https://www.apkmirror.com${apkLink}`,
-    `${joinPath(
-      global.revancedDir,
-      global.jarNames.selectedApp.packageName
-    )}.apk`,
-    ws
-  );
+  if (!apkDownloadLink) {
+    await dloadFromURL(
+      `https://www.apkmirror.com${apkLink}`,
+      `${joinPath(
+        global.revancedDir,
+        global.jarNames.selectedApp.packageName
+      )}.apkm`,
+      ws
+    );
+    await antiSplit(
+      `${joinPath(
+        global.revancedDir,
+        global.jarNames.selectedApp.packageName
+      )}.apkm`,
+      `${joinPath(
+        global.revancedDir,
+        global.jarNames.selectedApp.packageName
+      )}.apk`,
+      ws
+    );
+  } else {
+    await dloadFromURL(
+      `https://www.apkmirror.com${apkLink}`,
+      `${joinPath(
+        global.revancedDir,
+        global.jarNames.selectedApp.packageName
+      )}.apk`,
+      ws
+    );
+  }
 
   ws.send(
     JSON.stringify({

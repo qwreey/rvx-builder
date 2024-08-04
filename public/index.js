@@ -444,6 +444,11 @@ ws.onmessage = (msg) => {
         ).toString();
       }
       break;
+    case 'mergingFile':
+      document.getElementsByClassName('log')[0].innerHTML +=
+        '<span class="log-line"><strong>[builder]</strong> Merging files...</span><br/>';
+
+      break;
     case 'finished':
       hasFinished = true;
 

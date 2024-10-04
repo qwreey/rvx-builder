@@ -270,7 +270,7 @@ function setSourcesPreReleases() {
 
     if (prereleases === 'true') {
       document.getElementById('pre-releases').value = 'false';
-    } else {
+    } else if (prereleases === 'false') {
       document.getElementById('pre-releases').value = 'true';
     }
 

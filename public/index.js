@@ -331,20 +331,6 @@ function setSourcesRVX() {
   setSources();
 }
 
-function setSourcesReX() {
-  document.getElementById('cli-org').value = 'inotia00';
-  document.getElementById('cli-src').value = 'revanced-cli';
-
-  document.getElementById('patch-org').value = 'YT-Advanced';
-  document.getElementById('patch-src').value = 'ReX-patches';
-
-  document.getElementById('integrations-org').value = 'YT-Advanced';
-  document.getElementById('integrations-src').value = 'ReX-integrations';
-
-  disableARSCLib();
-  setSources();
-}
-
 function setSourcesRVX_anddea() {
   document.getElementById('cli-org').value = 'inotia00';
   document.getElementById('cli-src').value = 'revanced-cli';
@@ -353,6 +339,34 @@ function setSourcesRVX_anddea() {
   document.getElementById('patch-src').value = 'revanced-patches';
 
   document.getElementById('integrations-org').value = 'anddea';
+  document.getElementById('integrations-src').value = 'revanced-integrations';
+
+  disableARSCLib();
+  setSources();
+}
+
+function setSourcesReVanced() {
+  document.getElementById('cli-org').value = 'inotia00';
+  document.getElementById('cli-src').value = 'revanced-cli';
+
+  document.getElementById('patch-org').value = 'revanced';
+  document.getElementById('patch-src').value = 'revanced-patches';
+
+  document.getElementById('integrations-org').value = 'revanced';
+  document.getElementById('integrations-src').value = 'revanced-integrations';
+
+  disableARSCLib();
+  setSources();
+}
+
+function setSourcesPiko() {
+  document.getElementById('cli-org').value = 'inotia00';
+  document.getElementById('cli-src').value = 'revanced-cli';
+
+  document.getElementById('patch-org').value = 'crimera';
+  document.getElementById('patch-src').value = 'piko';
+
+  document.getElementById('integrations-org').value = 'crimera';
   document.getElementById('integrations-src').value = 'revanced-integrations';
 
   disableARSCLib();

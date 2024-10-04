@@ -9,6 +9,7 @@ const installReVanced = require('./installReVanced.js');
 const patchApp = require('./patchApp.js');
 const patchAppWithRipLibs = require('./patchAppWithRipLibs.js');
 const patchAppArscLib = require('./patchAppArscLib.js');
+const resetPatchOptions = require('./resetPatchOptions.js');
 const selectApp = require('./selectApp.js');
 const selectAppVersion = require('./selectAppVersion.js');
 const selectPatches = require('./selectPatches.js');
@@ -28,6 +29,7 @@ module.exports = {
   patchApp,
   patchAppWithRipLibs,
   patchAppArscLib,
+  resetPatchOptions,
   selectApp,
   selectAppVersion,
   selectPatches,

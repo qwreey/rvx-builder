@@ -265,6 +265,10 @@ function addSearch(isPatches) {
   });
 }
 
+function resetPatchOptions() {
+  sendCommand({ event: 'resetPatchOptions' });
+}
+
 function setSourcesPreReleases() {
   const prereleases = document.getElementById('pre-releases').value + '';
 
@@ -466,6 +470,7 @@ ws.onmessage = (msg) => {
     case 'finished':
       hasFinished = true;
 
+      document.getElementById('resetoptions').classList.remove('disabled');
       document.getElementById('continue').classList.remove('disabled');
       if (localStorage.getItem('auto-next')) {
         document.getElementById('continue').click();

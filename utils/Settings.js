@@ -76,7 +76,7 @@ function getSettings() {
   return settings;
 }
 
-function resetSettings() {
+function resetPatchesSources(ws) {
   rmSync('settings.json', { recursive: true, force: true });
   createSettingsFile();
 }
@@ -101,6 +101,6 @@ module.exports = {
   getPatchList,
   writePatches,
   getSources,
-  resetSettings,
+  resetPatchesSources,
   writeSources
 };

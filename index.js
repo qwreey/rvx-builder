@@ -26,6 +26,7 @@ const {
   patchAppWithRipLibs,
   patchAppArscLib,
   resetPatchOptions,
+  resetSettings,
   selectApp,
   selectAppVersion,
   selectPatches,
@@ -207,6 +208,9 @@ wsServer.on('connection', (ws) => {
         break;
       case 'resetPatchOptions':
         await resetPatchOptions(ws);
+        break;
+      case 'resetSettings':
+        await resetSettings(ws);
         break;
       case 'selectApp':
         selectApp(message);

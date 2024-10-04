@@ -269,6 +269,12 @@ function resetPatchOptions() {
   sendCommand({ event: 'resetPatchOptions' });
 }
 
+function resetSettings() {
+  sendCommand({ event: 'resetSettings' });
+  disableARSCLib();
+  setSourcesRVX();
+}
+
 function setSourcesPreReleases() {
   const prereleases = document.getElementById('pre-releases').value + '';
 

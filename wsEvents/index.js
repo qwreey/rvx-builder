@@ -10,6 +10,7 @@ const patchApp = require('./patchApp.js');
 const patchAppWithRipLibs = require('./patchAppWithRipLibs.js');
 const patchAppArscLib = require('./patchAppArscLib.js');
 const resetPatchOptions = require('./resetPatchOptions.js');
+const resetSettings = require('./resetSettings.js');
 const selectApp = require('./selectApp.js');
 const selectAppVersion = require('./selectAppVersion.js');
 const selectPatches = require('./selectPatches.js');
@@ -30,6 +31,7 @@ module.exports = {
   patchAppWithRipLibs,
   patchAppArscLib,
   resetPatchOptions,
+  resetSettings,
   selectApp,
   selectAppVersion,
   selectPatches,

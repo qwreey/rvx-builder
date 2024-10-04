@@ -55,6 +55,10 @@
   content: '\f7d9';
 }
 
+.fa-backward:before {
+  content: '\f04a';
+}
+
 .fa-download:before {
   content: '\f019';
 }

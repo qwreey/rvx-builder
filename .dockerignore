@@ -1,1 +1,13 @@
+# Dockerfiles
 Dockerfile
+Dockerfile.local
+
+# Git related
+.git
+.github
+.gitattributes
+.gitignore
+
+# Development
+.prettierrc.json
+.eslintrc.json

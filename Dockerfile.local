@@ -1,3 +1,7 @@
+# This dockerfile copies files from local directory,
+# rather then cloning repository from github.
+# Useful for testing local changes
+
 FROM node:lts-slim
 
 WORKDIR /app
@@ -12,7 +16,7 @@ RUN apt-get --yes update && \
   rm /app/zulu.deb && \
   apt-get -f install
 
-RUN git clone -b revanced-extended https://github.com/inotia00/rvx-builder --depth=1 --no-tags
+ADD . /app/rvx-builder
 
 WORKDIR /app/rvx-builder
 

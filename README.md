@@ -20,6 +20,8 @@ Required [docker](https://docs.docker.com/get-docker/) and [docker-compose (for 
 
 Clone the repository and `cd` into the directory `rvx-builder`
 
+Then, copy `docker-compose.example.yml` file to `docker-compose.yml`.
+
 ### Build using `docker-compose`
 
 ```bash

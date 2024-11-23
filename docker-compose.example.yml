@@ -10,3 +10,8 @@ services:
       - ./revanced/:/app/rvx-builder/revanced/
     ports:
       - 8000:8000
+    environment:
+      # Specific port to open server
+      # - PORT: 8080
+      # Specific settings.json path
+      # - SETTINGS_PATH: /app/rvx-builder/revanced/settings.json

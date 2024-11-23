@@ -1,4 +1,4 @@
-const { existsSync, readFileSync, rmSync, writeFileSync } = require('node:fs');
+const { existsSync, readFileSync, rmSync, writeFileSync, lstatSync } = require('node:fs');
 
 const defaultSettings = {
   sources: {
@@ -11,9 +11,10 @@ const defaultSettings = {
   patches: []
 };
 const defaultSettingsJSON = JSON.stringify(defaultSettings, null, 2);
+const settingsPath = process.env.SETTINGS_PATH ?? 'settings.json'
 
 function createSettingsFile() {
-  writeFileSync('settings.json', defaultSettingsJSON);
+  writeFileSync(settingsPath, defaultSettingsJSON);
 }
 
 /**
@@ -21,7 +22,7 @@ function createSettingsFile() {
  * @returns {Record<string, any>}
  */
 function getPatchesList(pkgName) {
-  const patchesList = JSON.parse(readFileSync('settings.json', 'utf8'));
+  const patchesList = JSON.parse(readFileSync(settingsPath, 'utf8'));
 
   const package = patchesList.patches.find(
     (package) => package.name === pkgName
@@ -39,11 +40,11 @@ function getPatchesList(pkgName) {
  * @param {Record<string, any>} patches
  */
 function writePatches({ packageName }, patches) {
-  if (!existsSync('settings.json')) {
+  if (!existsSync(settingsPath)) {
     createSettingsFile();
   }
 
-  const patchesList = JSON.parse(readFileSync('settings.json', 'utf8'));
+  const patchesList = JSON.parse(readFileSync(settingsPath, 'utf8'));
 
   const index = patchesList.patches.findIndex(
     (package) => package.name === packageName
@@ -56,14 +57,14 @@ function writePatches({ packageName }, patches) {
     });
   } else patchesList.patches[index].patches = patches;
 
-  writeFileSync('settings.json', JSON.stringify(patchesList, null, 2));
+  writeFileSync(settingsPath, JSON.stringify(patchesList, null, 2));
 }
 
 /**
  * @param {string} pkgName
  */
 function getPatchList(pkgName) {
-  if (!existsSync('settings.json')) {
+  if (!existsSync(settingsPath)) {
     createSettingsFile();
 
     return [];
@@ -71,26 +72,33 @@ function getPatchList(pkgName) {
 }
 
 function getSettings() {
-  const settings = JSON.parse(readFileSync('settings.json', 'utf8'));
+  const settings = JSON.parse(readFileSync(settingsPath, 'utf8'));
 
   return settings;
 }
 
 function resetPatchesSources(ws) {
-  rmSync('settings.json', { recursive: true, force: true });
+  // writeFileSync already overwrites target file.
+  // We need rmSync for directory only.
+  // If we remove normal file, in docker container,
+  // we can't mount settings file as single file.
+  // (EX: - ./settings.json:/app/settings.json)
+  if (!existsSync(settingsPath) && lstatSync(settingsPath).isDirectory()) {
+    rmSync(settingsPath, { recursive: true, force: true });
+  }
   createSettingsFile();
 }
 
 function writeSources(sources) {
-  const settings = JSON.parse(readFileSync('settings.json', 'utf8'));
+  const settings = JSON.parse(readFileSync(settingsPath, 'utf8'));
 
   settings.sources = sources;
 
-  writeFileSync('settings.json', JSON.stringify(settings, null, 2));
+  writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
 }
 
 function getSources() {
-  if (!existsSync('settings.json')) {
+  if (!existsSync(settingsPath)) {
     createSettingsFile();
 
     return defaultSettings.sources;

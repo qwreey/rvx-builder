@@ -121,16 +121,28 @@ const cleanExit = async (svr) => {
   setTimeout(() => process.exit(0), 2_500);
 };
 
-pf.getPortPromise()
-  .then((freePort) => {
-    log(`Listening at port ${freePort}`);
-    listen(freePort);
-  })
-  .catch((err) => {
-    log(`Unable to determine free ports.\nReason: ${err}`);
-    log('Falling back to 8080.');
-    listen(8080);
-  });
+if (process.env.PORT !== undefined) {
+  let port = parseInt(process.env.PORT);
+  if (Number.isNaN(port)) {
+    log('Unable to parse PORT environment variable.');
+    log('Failling back to 8080.');
+    port = 8080;
+  } else {
+    log(`Listening at port ${port}`);
+  }
+  listen(port);
+} else {
+  pf.getPortPromise()
+    .then((freePort) => {
+      log(`Listening at port ${freePort}`);
+      listen(freePort);
+    })
+    .catch((err) => {
+      log(`Unable to determine free ports.\nReason: ${err}`);
+      log('Falling back to 8080.');
+      listen(8080);
+    });
+}
 
 process.on('uncaughtException', (reason) => {
   log(`An error occured.\n${reason.stack}`);

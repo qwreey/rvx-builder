@@ -26,6 +26,12 @@ cd .\rvx-builder\
 ```
 *Or manually reopen the Terminal inside the newly created rvx-builder repository folder.*
 
+7. Copy example docker-compose example file:
+```
+copy docker-compose.example.yml docker-compose.yml
+```
+*Or copy it from explorer. If you *
+
 7. To start building with **docker-compose** run:
 ```
 docker-compose build --no-cache

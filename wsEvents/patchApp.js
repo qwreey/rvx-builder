@@ -178,7 +178,7 @@ module.exports = async function patchApp(ws) {
     '-m',
     global.jarNames.integrations,
     '--options',
-    './options.json',
+    process.env.OPTIONS_PATH ?? './options.json',
     '-f',
     '-p',
     '-o',

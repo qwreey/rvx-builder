@@ -179,7 +179,7 @@ module.exports = async function patchAppWithRipLibs(ws) {
     '-m',
     global.jarNames.integrations,
     '--options',
-    './options.json',
+    process.env.OPTIONS_PATH ?? './options.json',
     '-f',
     '-p',
     '-o',

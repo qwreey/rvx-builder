@@ -8,6 +8,7 @@ WORKDIR /app
 
 # This fixes settings being lost whenever the container is restarted
 ENV SETTINGS_PATH=/app/rvx-builder/revanced/settings.json
+ENV OPTIONS_PATH=/app/rvx-builder/revanced/options.json
 
 RUN --mount=type=cache,target=/var/cache/apt \
   apt-get --yes update && \

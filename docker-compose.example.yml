@@ -1,4 +1,3 @@
-version: '3'
 services:
   rvx-builder:
     container_name: rvx-builder
@@ -11,7 +10,8 @@ services:
     ports:
       - 8000:8000
     environment:
-      # Specific port to open server
-      # - PORT: 8080
-      # Specific settings.json path
-      # - SETTINGS_PATH: /app/rvx-builder/revanced/settings.json
+      # Specific the port to open server
+      # PORT: 8080
+      # Specific settings.json and options.json path
+      # SETTINGS_PATH: /app/rvx-builder/revanced/settings.json
+      # OPTIONS_PATH: /app/rvx-builder/revanced/options.json

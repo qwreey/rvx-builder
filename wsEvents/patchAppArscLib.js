@@ -132,7 +132,7 @@ module.exports = async function patchAppArscLib(ws) {
     '-m',
     global.jarNames.integrations,
     '--options',
-    './options.json',
+    process.env.OPTIONS_PATH ?? './options.json',
     '--experimental',
     '-a',
     `${join(global.revancedDir, global.jarNames.selectedApp.packageName)}.apk`,
